@@ -15,6 +15,11 @@ namespace Aranslow
         {
             LineInstance = new Texture2D(gDevice, 1, 1, false, SurfaceFormat.Color);
             LineInstance.SetData<Color>(new Color[] { Color.White });
+
+            BorderRectangleInstance = new Texture2D(Engine.RenderDeviceManager.GraphicsDevice, 1, 1);
+            BorderRectangleInstance.SetData(new Color[] { Color.White });
+
+            Tools.Logger.Log($"Initialised RenderFactory");
         }
 
         internal static void DrawLine(Vector2 lineStart, Vector2 lineEnd, Color lineColour, int thickness = 2)
@@ -32,12 +37,6 @@ namespace Aranslow
 
         internal static void DrawBox(Rectangle r, Color c, int thickness = 2)
         {
-            if (BorderRectangleInstance == null)
-            {
-                BorderRectangleInstance = new Texture2D(Engine.RenderDeviceManager.GraphicsDevice, 1, 1);
-                BorderRectangleInstance.SetData(new Color[] { Color.White });
-            }
-
             Engine.SBatch.Draw(BorderRectangleInstance, new Rectangle(r.X, r.Y, thickness, r.Height + thickness), c);
             Engine.SBatch.Draw(BorderRectangleInstance, new Rectangle(r.X, r.Y, r.Width + thickness, thickness), c);
             Engine.SBatch.Draw(BorderRectangleInstance, new Rectangle(r.X + r.Width, r.Y, thickness, r.Height + thickness), c);

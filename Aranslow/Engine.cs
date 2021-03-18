@@ -89,23 +89,15 @@ namespace Aranslow
             base.Draw(gameTime);
         }
 
-        private KeyboardState CachedKeyboardState;
         private void HandleInput(KeyboardState currentKeyboardState, MouseState currentMouseState)
         {
-            CachedKeyboardState = currentKeyboardState;
+            if (currentKeyboardState.IsKeyDown(Keys.Insert)) Settings.Rendering.IsBoundingBoxRendered = true;
+            if (currentKeyboardState.IsKeyDown(Keys.Delete)) Settings.Rendering.IsBoundingBoxRendered = false;
 
-            if (currentKeyboardState.IsKeyDown(Keys.Insert))
-                Settings.Rendering.IsBoundingBoxRendered = true;
-            if (currentKeyboardState.IsKeyDown(Keys.Delete))
-                Settings.Rendering.IsBoundingBoxRendered = false;
+            if (currentKeyboardState.IsKeyDown(Keys.Space)) ObjectManager.LocalPlayer.Health = 0;
 
-            if (currentKeyboardState.IsKeyDown(Keys.Space))
-                ObjectManager.LocalPlayer.Health = 0;
-
-            if (currentKeyboardState.IsKeyDown(Keys.OemTilde))
-                GameEngineMetrics.IsDrawRendererMetrics = true;
-            else
-                GameEngineMetrics.IsDrawRendererMetrics = false;
+            if (currentKeyboardState.IsKeyDown(Keys.OemTilde)) GameEngineMetrics.IsDrawRendererMetrics = true;
+            else GameEngineMetrics.IsDrawRendererMetrics = false;
 
             if (currentKeyboardState.IsKeyDown(Keys.Right))
                 ObjectManager.LocalPlayer.Walk(GameObjects.ASLocalClient.WalkState.Right);

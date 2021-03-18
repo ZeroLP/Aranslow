@@ -41,7 +41,6 @@ namespace Aranslow.Tools
 
         private static void DisableQuickEditMode()
         {
-
             if (!NativeImport.GetConsoleMode(NativeImport.GetConsoleWindow(), out uint mode))
                 return;
 
