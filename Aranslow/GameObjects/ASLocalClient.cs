@@ -27,8 +27,8 @@ namespace Aranslow.GameObjects
 
         public override void LoadContent()
         {
-            AnimationSprite.IdleAnimationSprite = new ASSprite(Engine.CTNManager.Load<Texture2D>("Sprites/Player/Idle"), 0.3f, true);
-            AnimationSprite.WalkAnimationSprite = new ASSprite(Engine.CTNManager.Load<Texture2D>("Sprites/Player/Walk"), 0.3f, true);
+            AnimationSprite.IdleAnimationSprite = new ASSprite(Engine.CTNManager.Load<Texture2D>("Sprites/Player/Idle"), 0.2f, true);
+            AnimationSprite.WalkAnimationSprite = new ASSprite(Engine.CTNManager.Load<Texture2D>("Sprites/Player/Walk"), 0.1f, true);
             //AnimationSprite.JumpAnimationSprite = new ASSprite(Engine.CTNManager.Load<Texture2D>("Sprites/Player/Jump"), 0.5f, true);
 
             base.LoadContent();
