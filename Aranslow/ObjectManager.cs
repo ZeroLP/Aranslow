@@ -34,21 +34,36 @@ namespace Aranslow
         public static event ObjectManagementEvent OnCreateObject;
         public static event ObjectManagementEvent OnDeleteObject;
 
-        public static bool CreateObject<T>(Vector2 wPosition) where T : ASBaseClient
+        public static void AddObject(ASBaseClient baseObject)
         {
+            lock (Objects)
+            {
+                Objects.Add(baseObject);
+            }
+        }
+
+        public static ASBaseClient CreateObject(Vector2 wPosition)
+        {
+            //Still need to solve this shit 
+            //Generate object on-demand with generics but without rising type errors
+
+            var objCreated = new ASBaseClient(wPosition);
+
             lock (Objects)
             {
                 try
                 {
-                    var objCreated = new ASBaseClient(wPosition);
-
                     Objects.Add(objCreated);
                     OnCreateObject?.Invoke(Engine.SecondaryGameTimeHandle, objCreated);
                 }
-                catch (Exception) { return false; }
+                catch (Exception ex)
+                {
+                    Logger.Log($"Failed to create object: {ex.Message}");
+                    return null;
+                }
             }
 
-            return true;
+            return objCreated;
         }
 
         public static bool DeleteObject(ASBaseClient objToDelete)

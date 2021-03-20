@@ -91,6 +91,8 @@ namespace Aranslow
 
         private void HandleInput(KeyboardState currentKeyboardState, MouseState currentMouseState)
         {
+            //TODO: Do a clean handling | probs a switch statement
+
             if (currentKeyboardState.IsKeyDown(Keys.Insert)) Settings.Rendering.IsBoundingBoxRendered = true;
             if (currentKeyboardState.IsKeyDown(Keys.Delete)) Settings.Rendering.IsBoundingBoxRendered = false;
 
@@ -103,6 +105,8 @@ namespace Aranslow
                 ObjectManager.LocalPlayer.Walk(GameObjects.ASLocalClient.WalkState.Right);
             else if (currentKeyboardState.IsKeyDown(Keys.Left))
                 ObjectManager.LocalPlayer.Walk(GameObjects.ASLocalClient.WalkState.Left);
+            else if (currentKeyboardState.IsKeyDown(Keys.X))
+                ObjectManager.LocalPlayer.GetSpellBook().CastBasicAttack();
             else
                 ObjectManager.LocalPlayer.Stand();
         }
