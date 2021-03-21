@@ -124,7 +124,7 @@ namespace Aranslow.GameObjects
                 }
                 else if(CurrrentCastingSpell == null)
                 {
-                    var createdSpell = new ASSpellClient(new Vector2(LocalPlayer.WorldPosition.X + 5, LocalPlayer.WorldPosition.Y));
+                    var createdSpell = ObjectManager.CreateObject<ASSpellClient>(new Vector2(LocalPlayer.WorldPosition.X + 5, LocalPlayer.WorldPosition.Y));
 
                     if (createdSpell != null)
                     {
@@ -137,7 +137,6 @@ namespace Aranslow.GameObjects
                         createdSpell.EndTime = Engine.SecondaryGameTimeHandle.TotalGameTime.TotalMilliseconds + 3000;
 
                         CurrrentCastingSpell = createdSpell;
-                        ObjectManager.AddObject(createdSpell);
                     }
                     else
                         Logger.Log("Failed to create BasicAttack spell for LocalPlayer");

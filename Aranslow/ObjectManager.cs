@@ -31,39 +31,49 @@ namespace Aranslow
 
         public delegate void ObjectManagementEvent(GameTime timeManaged, ASBaseClient objectManaged);
 
+        public static event ObjectManagementEvent OnAddObject;
         public static event ObjectManagementEvent OnCreateObject;
         public static event ObjectManagementEvent OnDeleteObject;
 
-        public static void AddObject(ASBaseClient baseObject)
+        public static bool AddObject(ASBaseClient baseObject)
         {
             lock (Objects)
             {
-                Objects.Add(baseObject);
+                try
+                {
+                    if (baseObject != null)
+                    {
+                        Objects.Add(baseObject);
+                        OnAddObject?.Invoke(Engine.SecondaryGameTimeHandle, baseObject);
+                    }
+                    else
+                        return false;
+                }
+                catch (Exception ex) { Logger.Log($"Failed to add object: {ex.Message}"); return false; }
             }
+
+            return true;
         }
 
-        public static ASBaseClient CreateObject(Vector2 wPosition)
+        public static T CreateObject<T>(Vector2 wPosition)
         {
-            //Still need to solve this shit 
-            //Generate object on-demand with generics but without rising type errors
-
-            var objCreated = new ASBaseClient(wPosition);
+            var objCreated = Activator.CreateInstance(typeof(T), new object[] { wPosition });
 
             lock (Objects)
             {
                 try
                 {
-                    Objects.Add(objCreated);
-                    OnCreateObject?.Invoke(Engine.SecondaryGameTimeHandle, objCreated);
+                    Objects.Add((ASBaseClient)objCreated);
+                    OnCreateObject?.Invoke(Engine.SecondaryGameTimeHandle, (ASBaseClient)objCreated);
                 }
                 catch (Exception ex)
                 {
                     Logger.Log($"Failed to create object: {ex.Message}");
-                    return null;
+                    return default(T);
                 }
             }
 
-            return objCreated;
+            return (T)objCreated;
         }
 
         public static bool DeleteObject(ASBaseClient objToDelete)

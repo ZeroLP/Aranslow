@@ -12,7 +12,7 @@ namespace Aranslow.GameObjects
     /// <summary>
     /// Base class for all game objects.
     /// </summary>
-    public class ASBaseClient
+    public abstract class ASBaseClient 
     {
         public ASBaseClient(Vector2 wPosition)
         {
